@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1E88E5">
+    <title>友邦保险需求调查</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            color: #fff;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            margin-top: 15px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #fff;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .question-container {
+            padding: 25px 20px;
+        }
+        
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 14px 18px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            border-color: #90CAF9;
+            background: #F5F9FF;
+        }
+        
+        .option.selected {
+            border-color: #1E88E5;
+            background: #E3F2FD;
+        }
+        
+        .option.selected .option-letter {
+            background: #1E88E5;
+            color: #fff;
+        }
+        
+        .option-letter {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #F0F0F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-right: 14px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .option-text {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .button-container {
+            padding: 15px 20px 25px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary {
+            background: #F5F5F5;
+            color: #666;
+        }
+        
+        .btn-secondary:hover {
+            background: #E8E8E8;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-wechat {
+            background: linear-gradient(135deg, #07C160 0%, #06AD56 100%);
+            color: #fff;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .btn-wechat:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.4);
+        }
+        
+        .result-container {
+            padding: 25px 20px;
+        }
+        
+        .result-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #66BB6A 0%, #43A047 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 35px;
+        }
+        
+        .result-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        
+        .result-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        
+        .result-card {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .result-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1E88E5;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-card h3::before {
+            content: '✓';
+            margin-right: 8px;
+        }
+        
+        .result-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .lucky-text {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #8D6E63;
+            line-height: 1.8;
+        }
+        
+        .product-list {
+            margin-top: 15px;
+        }
+        
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #F8FAFC;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .product-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .product-desc {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .contact-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        
+        .share-tip {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            padding-bottom: 15px;
+        }
+        
+        .option.multi-select {
+            position: relative;
+        }
+        
+        .option.multi-select.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 14px;
+            color: #1E88E5;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .welcome-container {
+            padding: 30px 25px;
+            text-align: center;
+        }
+        
+        .welcome-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: #fff;
+        }
+        
+        .welcome-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-label span {
+            color: #E53935;
+            margin-left: 3px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        
+        .form-input:focus {
+            border-color: #1E88E5;
+            background: #F5F9FF;
+        }
+        
+        .form-input::placeholder {
+            color: #BDBDBD;
+        }
+        
+        .wechat-qrcode {
+            width: 200px;
+            height: 200px;
+            background: #F5F5F5;
+            border-radius: 12px;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            border: 2px dashed #E0E0E0;
+        }
+        
+        .wechat-qrcode img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        
+        .add-wechat-tip {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .share-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .share-btn-moments {
+            background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+            color: #fff;
+        }
+        
+        .share-btn-friend {
+            background: linear-gradient(135deg, #07C160 0%, #06AD56 100%);
+            color: #fff;
+        }
+        
+        .user-info-card {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .user-info-card h4 {
+            font-size: 14px;
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+        
+        .user-info-card p {
+            font-size: 13px;
+            color: #333;
+            margin: 4px 0;
+        }
+        
+        .copy-btn {
+            background: #1976D2;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .privacy-tip {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        
+        .privacy-tip::before {
+            content: '🔒';
+            margin-right: 4px;
+        }
+
+        .gift-card {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+        }
+
+        .gift-icon {
+            font-size: 36px;
+        }
+
+        .gift-content h4 {
+            color: #8B4513;
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+        }
+
+        .gift-content p {
+            color: #5D3A1A;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- 欢迎页面 -->
+    </div>
+    
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const ADVISOR_WECHAT = 'TuanMa1203';
+        const ADVISOR_NAME = '您的姓名';
+        const ADVISOR_PHONE = '您的电话';
+        
+        const questions = [
+            {
+                id: 1,
+                question: '您的年龄？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '18-25岁' },
+                    { key: 'B', text: '26-35岁' },
+                    { key: 'C', text: '36-45岁' },
+                    { key: 'D', text: '46-55岁' },
+                    { key: 'E', text: '55岁以上' }
+                ]
+            },
+            {
+                id: 2,
+                question: '您的性别？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '男' },
+                    { key: 'B', text: '女' }
+                ]
+            },
+            {
+                id: 3,
+                question: '您的婚姻状况？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '未婚' },
+                    { key: 'B', text: '已婚（无子女）' },
+                    { key: 'C', text: '已婚（有子女）' },
+                    { key: 'D', text: '离异/丧偶' }
+                ]
+            },
+            {
+                id: 4,
+                question: '您的家庭结构是？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '单身独居' },
+                    { key: 'B', text: '夫妻二人' },
+                    { key: 'C', text: '夫妻+子女（未成年）' },
+                    { key: 'D', text: '夫妻+子女（已成年）' },
+                    { key: 'E', text: '三代同堂' }
+                ]
+            },
+            {
+                id: 5,
+                question: '您家庭的月均收入约为？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '8000元以下' },
+                    { key: 'B', text: '8000-15000元' },
+                    { key: 'C', text: '15000-30000元' },
+                    { key: 'D', text: '30000-50000元' },
+                    { key: 'E', text: '50000元以上' }
+                ]
+            },
+            {
+                id: 6,
+                question: '您目前的主要负债有哪些？（可多选）',
+                type: 'multiple',
+                options: [
+                    { key: 'A', text: '无负债' },
+                    { key: 'B', text: '房贷' },
+                    { key: 'C', text: '车贷' },
+                    { key: 'D', text: '信用卡/消费贷' },
+                    { key: 'E', text: '其他贷款' }
+                ]
+            },
+            {
+                id: 7,
+                question: '您是否有购买过商业保险？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '从未购买' },
+                    { key: 'B', text: '已购买（仅社保/医保）' },
+                    { key: 'C', text: '已购买（部分商业保险）' },
+                    { key: 'D', text: '已购买（全面商业保险）' }
+                ]
+            },
+            {
+                id: 8,
+                question: '如果此刻你无法工作、没有收入，家里的房贷/车贷、孩子的学费、父母的赡养费，能正常支付几个月？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '6个月以内' },
+                    { key: 'B', text: '6-12个月' },
+                    { key: 'C', text: '1-2年' },
+                    { key: 'D', text: '2年以上，完全无压力' }
+                ]
+            },
+            {
+                id: 9,
+                question: '你是否想过，若有一天你发生意外或重疾，无法继续照顾家人，他们能依靠自己平稳度过难关吗？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '完全不能，家人依赖我的收入' },
+                    { key: 'B', text: '勉强可以，会大幅降低生活质量' },
+                    { key: 'C', text: '基本可以，但会有压力' },
+                    { key: 'D', text: '完全可以，无任何影响' }
+                ]
+            },
+            {
+                id: 10,
+                question: '家里的孩子（若有），从现在到大学毕业的教育费用、兴趣培养费用，你是否已经提前规划好，且不受任何突发情况影响？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '没有规划，走一步看一步' },
+                    { key: 'B', text: '有初步规划，但担心突发情况打断' },
+                    { key: 'C', text: '有完善规划，基本无顾虑' },
+                    { key: 'D', text: '不需要规划，完全有能力承担' }
+                ]
+            },
+            {
+                id: 11,
+                question: '最近一年，你或家人是否有过身体不适、体检异常（如结节、三高、胃病等），却因为担心花钱、没时间，没进一步检查或调理？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '经常有' },
+                    { key: 'B', text: '偶尔有' },
+                    { key: 'C', text: '很少有' },
+                    { key: 'D', text: '从未有过' }
+                ]
+            },
+            {
+                id: 12,
+                question: '你知道现在一场重大疾病（如癌症、心梗）的治疗费用，包括手术、化疗、康复，平均需要多少吗？（提示：普遍在30-100万）',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '不知道，没想过' },
+                    { key: 'B', text: '大概了解，但觉得自己用不上' },
+                    { key: 'C', text: '清楚，且有一定储备' },
+                    { key: 'D', text: '非常清楚，已经做好应对准备' }
+                ]
+            },
+            {
+                id: 13,
+                question: '若你或家人不幸确诊重疾，需要暂停工作、专心治疗，这段时间的误工损失、康复护理费用，你有把握轻松承担吗？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '完全没把握，会拖垮家庭' },
+                    { key: 'B', text: '有一点把握，但会动用全部积蓄' },
+                    { key: 'C', text: '比较有把握，基本不影响生活' },
+                    { key: 'D', text: '完全有把握，无任何压力' }
+                ]
+            },
+            {
+                id: 14,
+                question: '你希望自己退休后，能保持和现在一样的生活质量（旅行、养生、陪伴家人），还是会因为收入减少，不得不降低标准？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '希望保持现有质量，但没规划' },
+                    { key: 'B', text: '希望保持，但不知道怎么规划' },
+                    { key: 'C', text: '有规划，基本能实现' },
+                    { key: 'D', text: '无所谓，怎么过都可以' }
+                ]
+            },
+            {
+                id: 15,
+                question: '当遇到突发情况（如意外受伤、家人急病、失业），你手里的应急资金，能支撑家里多久的正常开支？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '1个月以内' },
+                    { key: 'B', text: '1-3个月' },
+                    { key: 'C', text: '3-6个月' },
+                    { key: 'D', text: '6个月以上' }
+                ]
+            },
+            {
+                id: 16,
+                question: '你是否觉得，"保险是没用的，我身体好、运气好，不会遇到风险"？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '完全认同，从没想过买保险' },
+                    { key: 'B', text: '有点认同，觉得风险离自己很远' },
+                    { key: 'C', text: '不认同，知道风险不可预测，但没行动' },
+                    { key: 'D', text: '完全不认同，已经配置了合适的保险' }
+                ]
+            },
+            {
+                id: 17,
+                question: '您最担心的风险是？（可多选）',
+                type: 'multiple',
+                options: [
+                    { key: 'A', text: '重大疾病带来的医疗费用' },
+                    { key: 'B', text: '意外事故导致的伤残或身故' },
+                    { key: 'C', text: '家庭经济支柱失去收入能力' },
+                    { key: 'D', text: '养老资金不足' },
+                    { key: 'E', text: '子女教育费用压力' },
+                    { key: 'F', text: '其他' }
+                ]
+            },
+            {
+                id: 18,
+                question: '您能够接受的年缴保费预算约为？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '年收入的5%以下' },
+                    { key: 'B', text: '年收入的5%-10%' },
+                    { key: 'C', text: '年收入的10%-15%' },
+                    { key: 'D', text: '年收入的15%-20%' },
+                    { key: 'E', text: '视产品而定' }
+                ]
+            },
+            {
+                id: 19,
+                question: '对于健康保障，您更关注？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '重大疾病确诊一次性赔付' },
+                    { key: 'B', text: '住院医疗费用报销' },
+                    { key: 'C', text: '门诊医疗费用报销' },
+                    { key: 'D', text: '长期护理保障' },
+                    { key: 'E', text: '都关注' }
+                ]
+            },
+            {
+                id: 20,
+                question: '如果有一份保险，能精准覆盖你上面担心的所有风险（生病有钱治、意外有保障、家人有依靠、养老有底气），且保费在你的预算范围内，你愿意花几分钟了解一下吗？',
+                type: 'single',
+                options: [
+                    { key: 'A', text: '愿意，非常想了解' },
+                    { key: 'B', text: '可以了解一下，看具体情况' },
+                    { key: 'C', text: '暂时不需要' },
+                    { key: 'D', text: '不愿意' }
+                ]
+            }
+        ];
+
+        let currentIndex = 0;
+        let answers = {};
+        let multipleSelections = {};
+        let userInfo = {};
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function showWelcome() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="header">
+                    <h1>友邦保险需求调查</h1>
+                    <p>让专业顾问为您定制保障方案</p>
+                </div>
+                <div class="welcome-container">
+                    <div class="welcome-logo">📋</div>
+                    <h2 class="welcome-title">您好！</h2>
+                    <p class="welcome-desc">
+                        感谢您参与本次保险需求调查！<br>
+                        请花2分钟填写以下信息，<br>
+                        我们将为您定制专属保障方案。
+                    </p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">您的姓名<span>*</span></label>
+                        <input type="text" class="form-input" id="userName" placeholder="请输入您的姓名">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">您的微信号<span>*</span></label>
+                        <input type="text" class="form-input" id="userWechat" placeholder="请输入您的微信号">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">联系电话</label>
+                        <input type="tel" class="form-input" id="userPhone" placeholder="请输入您的手机号（选填）">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="startSurvey()" style="width:100%; margin-top:10px;">
+                        开始调查
+                    </button>
+                    
+                    <p class="privacy-tip">
+                        您的信息仅用于保险规划服务，我们承诺严格保密
+                    </p>
+                </div>
+            `;
+        }
+
+        function startSurvey() {
+            const name = document.getElementById('userName').value.trim();
+            const wechat = document.getElementById('userWechat').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            
+            if (!name) {
+                showToast('请输入您的姓名');
+                return;
+            }
+            if (!wechat) {
+                showToast('请输入您的微信号');
+                return;
+            }
+            
+            userInfo = { name, wechat, phone };
+            
+            saveUserInfo(userInfo);
+            
+            currentIndex = 0;
+            answers = {};
+            multipleSelections = {};
+            loadQuestion(0);
+        }
+
+        function saveUserInfo(info) {
+            let users = JSON.parse(localStorage.getItem('survey_users') || '[]');
+            const timestamp = new Date().toLocaleString('zh-CN');
+            users.push({ ...info, timestamp, answers: null });
+            localStorage.setItem('survey_users', JSON.stringify(users));
+        }
+
+        function updateSurveyResult(answers) {
+            let users = JSON.parse(localStorage.getItem('survey_users') || '[]');
+            if (users.length > 0) {
+                users[users.length - 1].answers = answers;
+                users[users.length - 1].multipleSelections = multipleSelections;
+                localStorage.setItem('survey_users', JSON.stringify(users));
+            }
+        }
+
+        function loadQuestion(index) {
+            const question = questions[index];
+            const app = document.getElementById('app');
+            
+            let optionsHTML = '';
+            question.options.forEach(opt => {
+                const isSelected = question.type === 'single' 
+                    ? answers[question.id] === opt.key 
+                    : (multipleSelections[question.id] || []).includes(opt.key);
+                const optionClass = question.type === 'multiple' ? 'multi-select' : '';
+                
+                optionsHTML += `
+                    <div class="option ${optionClass} ${isSelected ? 'selected' : ''}" 
+                         onclick="selectOption(${question.id}, '${opt.key}', '${question.type}')">
+                        <span class="option-letter">${opt.key}</span>
+                        <span class="option-text">${opt.text}</span>
+                    </div>
+                `;
+            });
+            
+            app.innerHTML = `
+                <div class="header">
+                    <h1>友邦保险需求调查</h1>
+                    <p>让专业顾问为您定制保障方案</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${((index + 1) / questions.length) * 100}%"></div>
+                    </div>
+                </div>
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">${index + 1}</span>
+                        <span class="question-text">${question.question}</span>
+                    </div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-secondary" id="prev-btn" style="display: ${index > 0 ? 'block' : 'none'}" onclick="prevQuestion()">上一题</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">${index === questions.length - 1 ? '查看结果' : '下一题'}</button>
+                </div>
+            `;
+        }
+
+        function selectOption(qId, key, type) {
+            if (type === 'single') {
+                answers[qId] = key;
+            } else {
+                if (!multipleSelections[qId]) multipleSelections[qId] = [];
+                const idx = multipleSelections[qId].indexOf(key);
+                if (idx > -1) {
+                    multipleSelections[qId].splice(idx, 1);
+                } else {
+                    multipleSelections[qId].push(key);
+                }
+            }
+            loadQuestion(currentIndex);
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadQuestion(currentIndex);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                loadQuestion(currentIndex);
+            } else {
+                updateSurveyResult(answers);
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const result = analyzeAnswers();
+            const app = document.getElementById('app');
+            
+            app.innerHTML = `
+                <div class="header">
+                    <h1>您的保险规划建议</h1>
+                    <p>根据您的需求定制专属方案</p>
+                </div>
+                <div class="result-container">
+                    <div class="result-icon">🎯</div>
+                    <h2 class="result-title">${result.title}</h2>
+                    <p class="result-subtitle">${result.subtitle}</p>
+                    
+                    <div class="user-info-card">
+                        <h4>📋 您的信息已记录</h4>
+                        <p>姓名：${userInfo.name}</p>
+                        <p>微信：${userInfo.wechat}</p>
+                        ${userInfo.phone ? `<p>电话：${userInfo.phone}</p>` : ''}
+                        <button class="copy-btn" onclick="copyUserInfo()">复制信息</button>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>您的需求分析</h3>
+                        <p>${result.analysis}</p>
+                    </div>
+                    
+                    <div class="lucky-text">
+                        ${result.luckyWords}
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>推荐保险方向</h3>
+                        <p>${result.recommendation}</p>
+                    </div>
+                    
+                    <div class="product-list">
+                        ${result.products.map(p => `
+                            <div class="product-item">
+                                <div class="product-icon">${p.icon}</div>
+                                <div class="product-info">
+                                    <div class="product-name">${p.name}</div>
+                                    <div class="product-desc">${p.desc}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="result-card" style="text-align: center;">
+                        <h3 style="justify-content: center;">联系专属顾问</h3>
+                        <p class="add-wechat-tip">
+                            微信号：<strong style="color:#1E88E5">${ADVISOR_WECHAT}</strong>
+                        </p>
+                        <button class="btn btn-wechat" onclick="copyWechat()">
+                            复制微信号，去微信添加好友
+                        </button>
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <button class="share-btn share-btn-moments" onclick="shareMoments()">
+                            🌟 分享到朋友圈
+                        </button>
+                        <button class="share-btn share-btn-friend" onclick="shareFriend()">
+                            💬 发送给朋友
+                        </button>
+                    </div>
+                    
+                    <div class="share-tip">
+                        觉得有用？分享给朋友一起了解吧！
+                    </div>
+                    
+                    <div class="gift-card">
+                        <div class="gift-icon">🎁</div>
+                        <div class="gift-content">
+                            <h4>问卷福利</h4>
+                            <p>完成作答后，可私信我获取《个人/家庭风险评估报告》，帮你精准找到最需要补充的保障缺口，不花冤枉钱，不买无用险！</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function analyzeAnswers() { 
+            const q1 = answers[1];   // 年龄 
+            const q8 = answers[8];   // 家庭财务支撑能力 
+            const q9 = answers[9];   // 家人依靠程度 
+            const q10 = answers[10]; // 子女教育规划 
+            const q11 = answers[11]; // 健康检查情况 
+            const q12 = answers[12]; // 重疾费用认知 
+            const q13 = answers[13]; // 重疾承担能力 
+            const q14 = answers[14]; // 养老规划 
+            const q15 = answers[15]; // 应急资金 
+            const q16 = answers[16]; // 保险认知 
+            const q20 = answers[20]; // 购买意向 
+         
+            let title = '', subtitle = '', analysis = '', luckyWords = '', recommendation = ''; 
+             
+            // 基础分析逻辑（可根据需求调整） 
+            if (['A', 'B'].includes(q8) || ['A', 'B'].includes(q9) || ['A', 'B'].includes(q15)) { 
+                title = "家庭保障缺口较明显"; 
+                subtitle = "建议优先配置基础保障，筑牢家庭财务防线"; 
+                analysis = "从您的回答来看，家庭在突发风险应对能力上存在明显缺口：应急资金储备不足、家庭收入中断后财务支撑能力较弱，家人对您的收入依赖度较高。这类风险一旦发生，可能会对家庭生活质量造成较大影响。"; 
+                luckyWords = "风险不可预测，但保障可以提前规划！及时配置合适的保险，能让您在面对意外时更有底气，守护家人的稳定生活。"; 
+                recommendation = "优先配置意外险（低成本高杠杆）+ 百万医疗险（覆盖大额医疗费用）+ 重疾险（弥补收入损失）；若您是家庭经济支柱，建议额外配置定期寿险，确保家人生活不受影响。"; 
+            } else if (['C', 'D'].includes(q8) && ['C', 'D'].includes(q13) && ['C', 'D'].includes(q16)) { 
+                title = "保障意识良好，可优化配置"; 
+                subtitle = "现有基础保障完善，建议针对性提升保障品质"; 
+                analysis = "您具备较好的风险意识，家庭应急资金充足，对重疾等风险有清晰认知且有一定的应对能力。目前的保障体系已具备基础框架，但仍有优化空间，可向更高品质的保障升级。"; 
+                luckyWords = "您的风险规划意识远超多数人！持续优化保障配置，能让家庭财务更稳健，未来生活更安心。"; 
+                recommendation = "优化现有保险组合，增加重疾险保额/升级多次赔付版本；配置养老年金险锁定未来收益；若有子女，可补充教育金保险，确保子女教育规划不受影响。"; 
+            } else { 
+                title = "保障体系需针对性完善"; 
+                subtitle = "根据家庭阶段定制专属保障方案"; 
+                analysis = "您的家庭风险状况处于中等水平：部分风险有应对准备，但仍有细节可优化。不同人生阶段（如育儿期、中年期）的保障需求不同，建议结合年龄、家庭结构精准配置。"; 
+                luckyWords = "保险的核心是“精准匹配”，适合自己的才是最好的！专业顾问会根据您的实际情况，定制性价比最高的保障方案。"; 
+                recommendation = "先查漏补缺基础保障（如医疗险/意外险），再根据家庭责任（子女/父母）配置重疾险/寿险；若有养老需求，可逐步配置年金险，兼顾保障与理财。"; 
+            } 
+         
+            // 推荐产品列表（固定示例，可根据逻辑动态调整） 
+            const products = [ 
+                { icon: '🏥', name: '百万医疗险', desc: '每年几百元，覆盖百万级医疗费用，解决大病医疗开支' }, 
+                { icon: '�', name: '重疾险', desc: '确诊一次性赔付，弥补治疗期间的收入损失和康复费用' }, 
+                { icon: '🛡️', name: '意外险', desc: '低成本高杠杆，覆盖意外身故/伤残、意外医疗等风险' }, 
+                { icon: '👨‍👩‍👧', name: '定期寿险', desc: '家庭经济支柱必备，保障家人生活不受收入中断影响' }, 
+                { icon: '�', name: '养老年金险', desc: '提前规划养老，确保退休后稳定的现金流' } 
+            ]; 
+         
+            return { title, subtitle, analysis, luckyWords, recommendation, products }; 
+        }
+
+        function copyUserInfo() { 
+            const info = `姓名：${userInfo.name}\n微信：${userInfo.wechat}${userInfo.phone ? '\n电话：' + userInfo.phone : ''}`; 
+            navigator.clipboard.writeText(info).then(() => { 
+                showToast('信息复制成功！'); 
+            }).catch(() => { 
+                showToast('复制失败，请手动记录'); 
+            }); 
+        } 
+ 
+        function copyWechat() { 
+            navigator.clipboard.writeText(ADVISOR_WECHAT).then(() => { 
+                showToast('微信号复制成功！'); 
+            }).catch(() => { 
+                showToast('复制失败，请手动记录'); 
+            }); 
+        } 
+ 
+        function shareMoments() { 
+            showToast('朋友圈分享功能已触发（实际需对接微信SDK）'); 
+        } 
+ 
+        function shareFriend() { 
+            showToast('好友分享功能已触发（实际需对接微信SDK）'); 
+        }
+
+        function showAdminPanel() {
+            const password = prompt('请输入管理员密码：');
+            if (password !== 'admin123') {
+                showToast('密码错误');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('survey_users') || '[]');
+            const app = document.getElementById('app');
+
+            if (users.length === 0) {
+                app.innerHTML = `
+                    <div class="header">
+                        <h1>客户数据查看</h1>
+                        <p>管理员面板</p>
+                    </div>
+                    <div class="result-container">
+                        <div class="result-icon">📭</div>
+                        <h2 class="result-title">暂无客户数据</h2>
+                        <p class="result-subtitle">还没有人填写调查问卷</p>
+                        <button class="btn btn-primary" onclick="showWelcome()" style="width:100%; margin-top:20px;">
+                            返回首页
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let usersHTML = '';
+            users.forEach((user, index) => {
+                const ageText = { 'A': '18-25岁', 'B': '26-35岁', 'C': '36-45岁', 'D': '46-55岁', 'E': '55岁以上' };
+                const incomeText = { 'A': '8000元以下', 'B': '8000-15000元', 'C': '15000-30000元', 'D': '30000-50000元', 'E': '50000元以上' };
+                const insuranceText = { 'A': '从未购买', 'B': '仅社保/医保', 'C': '部分商业保险', 'D': '全面商业保险' };
+                const userAge = user.answers ? ageText[user.answers[1]] : '-';
+                const userIncome = user.answers ? incomeText[user.answers[5]] : '-';
+                const userInsurance = user.answers ? insuranceText[user.answers[7]] : '-';
+
+                usersHTML += `
+                    <div class="result-card">
+                        <h3>客户 ${index + 1}</h3>
+                        <p><strong>姓名：</strong>${user.name}</p>
+                        <p><strong>微信：</strong>${user.wechat}</p>
+                        <p><strong>电话：</strong>${user.phone || '-'}</p>
+                        <p><strong>年龄：</strong>${userAge}</p>
+                        <p><strong>收入：</strong>${userIncome}</p>
+                        <p><strong>保险情况：</strong>${userInsurance}</p>
+                        <p><strong>填写时间：</strong>${user.timestamp}</p>
+                    </div>
+                `;
+            });
+
+            app.innerHTML = `
+                <div class="header">
+                    <h1>客户数据查看</h1>
+                    <p>共 ${users.length} 条记录</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="result-container">
+                    ${usersHTML}
+                    <button class="btn btn-secondary" onclick="exportData()" style="width:100%; margin-top:10px;">
+                        导出数据
+                    </button>
+                    <button class="btn btn-primary" onclick="showWelcome()" style="width:100%; margin-top:10px;">
+                        返回首页
+                    </button>
+                </div>
+            `;
+        }
+
+        function exportData() {
+            const users = JSON.parse(localStorage.getItem('survey_users') || '[]');
+            if (users.length === 0) {
+                showToast('暂无数据可导出');
+                return;
+            }
+
+            let csv = '姓名,微信号,电话,年龄,收入,保险情况,填写时间\n';
+            const ageText = { 'A': '18-25岁', 'B': '26-35岁', 'C': '36-45岁', 'D': '46-55岁', 'E': '55岁以上' };
+            const incomeText = { 'A': '8000元以下', 'B': '8000-15000元', 'C': '15000-30000元', 'D': '30000-50000元', 'E': '50000元以上' };
+            const insuranceText = { 'A': '从未购买', 'B': '仅社保/医保', 'C': '部分商业保险', 'D': '全面商业保险' };
+
+            users.forEach(user => {
+                const userAge = user.answers ? ageText[user.answers[1]] : '-';
+                const userIncome = user.answers ? incomeText[user.answers[5]] : '-';
+                const userInsurance = user.answers ? insuranceText[user.answers[7]] : '-';
+                csv += `${user.name},${user.wechat},${user.phone || '-'},${userAge},${userIncome},${userInsurance},${user.timestamp}\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = '客户信息_' + new Date().toLocaleDateString('zh-CN') + '.csv';
+            link.click();
+            showToast('数据已导出');
+        }
+
+        setTimeout(() => {
+            const footer = document.createElement('div');
+            footer.style.cssText = 'text-align:center;padding:20px;font-size:12px;color:#999;';
+            footer.innerHTML = '<a href="javascript:showAdminPanel()" style="color:#999;text-decoration:none;">管理入口</a>';
+            document.body.appendChild(footer);
+        }, 2000);
+
+        showWelcome();
+    </script>
+</body>
+</html>
